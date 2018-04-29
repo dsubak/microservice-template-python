@@ -1,0 +1,7 @@
+admins:
+  - daniel.subak@klaviyo.com
+  - dmitry.mamyrin@klaviyo.com
+integrations:
+  - {name: fake_value, email: dont-know-what-this-should-be@klaviyo.com}
+extensions:
+- slack

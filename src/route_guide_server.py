@@ -110,6 +110,11 @@ class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
                     yield prev_note
             prev_notes.append(new_note)
 
+    def GetStatus(self, empty, context):
+        # Point of clarification for future Dan - request is whatever type you defined for a simple rpc call
+        # gRPC tutorial calls em all requests, but maybe it'd be nice to name these like their types
+        return route_guide_pb2.Status(status='OK', status_code=0)
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

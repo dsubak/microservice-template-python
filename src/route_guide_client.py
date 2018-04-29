@@ -18,6 +18,7 @@ from __future__ import print_function
 import random
 
 import grpc
+import google
 
 import gen.route_guide_pb2_grpc as route_guide_pb2_grpc
 import route_guide_resources
@@ -97,7 +98,10 @@ def guide_route_chat(stub):
     for response in responses:
         print("Received message %s at %s" % (response.message,
                                              response.location))
-
+def get_service_status(stub):
+    # TODO: This works, but not sure if it's a proper utilization of the Empty object
+    status = stub.GetStatus(route_guide_pb2.google_dot_protobuf_dot_empty__pb2.Empty())
+    print('Status {} - {}'.format(status.status, status.status_code))
 
 def run():
     channel = grpc.insecure_channel('localhost:50051')
@@ -110,6 +114,8 @@ def run():
     guide_record_route(stub)
     print("-------------- RouteChat --------------")
     guide_route_chat(stub)
+    print("-------------- Get_Service_Status ----------")
+    get_service_status(stub)
 
 
 if __name__ == '__main__':

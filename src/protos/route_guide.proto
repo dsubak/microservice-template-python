@@ -14,6 +14,9 @@
 
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
+
 option java_multiple_files = true;
 option java_package = "io.grpc.examples.routeguide";
 option java_outer_classname = "RouteGuideProto";
@@ -50,6 +53,10 @@ service RouteGuide {
   // Accepts a stream of RouteNotes sent while a route is being traversed,
   // while receiving other RouteNotes (e.g. from other users).
   rpc RouteChat(stream RouteNote) returns (stream RouteNote) {}
+
+  // Status check endpoint - this will be required to be exposed for all microservices
+  //
+  rpc GetStatus(google.protobuf.Empty) returns (Status) {}
 }
 
 // Points are represented as latitude-longitude pairs in the E7 representation
@@ -108,4 +115,11 @@ message RouteSummary {
 
   // The duration of the traversal in seconds.
   int32 elapsed_time = 4;
+}
+
+// A Status is a simple type which contains a string and a status code
+// It is the return value from the GetStatus and returns health information
+message Status {
+  string status = 1;
+  int32 status_code = 2;
 }
